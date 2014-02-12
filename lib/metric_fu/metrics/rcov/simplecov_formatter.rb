@@ -7,19 +7,29 @@ class SimpleCov::Formatter::MetricFu
 
   def format(result)
     rcov_text = FormatLikeRCov.new(result).format
-    coverage_file_path = File.join(SimpleCov.root, 'coverage', 'rcov', 'rcov.txt')
     client = MetricFu::RCovTestCoverageClient.new(coverage_file_path)
     client.post_results(rcov_text)
   end
 
-  def output_path
-    metric = :rcov
-    MetricFu::Metric.get_metric(metric).run_options[:output_directory] ||
-    begin
-      metric_directory = MetricFu::Io::FileSystem.scratch_directory(metric)
-      MetricFu::Utility.mkdir_p(metric_directory, :verbose => false)
-    end
+  attr_writer :coverage_file_path
+
+  def coverage_file_path
+    @coverage_file_path || self.coverage_file_path = default_coverage_file_path
   end
+
+  def default_coverage_file_path
+    File.join(SimpleCov.root, 'coverage', 'rcov', output_file_name)
+  end
+
+  # TODO: make the coverage path more sane
+  # def output_path
+  #   metric = :rcov
+  #   MetricFu::Metric.get_metric(metric).run_options[:output_directory] ||
+  #   begin
+  #     metric_directory = MetricFu::Io::FileSystem.scratch_directory('coverage')
+  #     MetricFu::Utility.mkdir_p(metric_directory, :verbose => false)
+  #   end
+  # end
 
   def output_file_name
     'rcov.txt'
