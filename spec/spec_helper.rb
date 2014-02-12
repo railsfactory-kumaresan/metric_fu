@@ -1,12 +1,14 @@
-require 'rspec/autorun'
-
+# add lib to the load path just like rubygems does
+$:.unshift File.expand_path("../../lib", __FILE__)
 if ENV['COVERAGE']
   require 'simplecov'
   formatters = [SimpleCov::Formatter::HTMLFormatter]
   begin
     puts '[COVERAGE] Running with SimpleCov HTML Formatter'
-    require 'simplecov-rcov-text'
-    formatters << SimpleCov::Formatter::RcovTextFormatter
+    require 'metric_fu/metrics/rcov/simplecov_formatter'
+    formatters << SimpleCov::Formatter::MetricFu
+    # require 'simplecov-rcov-text'
+    # formatters << SimpleCov::Formatter::RcovTextFormatter
     puts '[COVERAGE] Running with SimpleCov Rcov Formatter'
   rescue LoadError
     puts '[COVERAGE] SimpleCov Rcov formatter could not be loaded'
@@ -15,13 +17,12 @@ if ENV['COVERAGE']
   SimpleCov.start
 end
 
+require 'rspec/autorun'
 require 'date'
 require 'test_construct'
 require 'json'
 require 'pry-nav'
 
-# add lib to the load path just like rubygems does
-$:.unshift File.expand_path("../../lib", __FILE__)
 require 'metric_fu'
 include MetricFu
 def mf_log(msg); mf_debug(msg); end

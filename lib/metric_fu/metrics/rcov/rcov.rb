@@ -2,6 +2,7 @@ MetricFu.lib_require { 'utility' }
 MetricFu.lib_require { 'calculate' }
 MetricFu.data_structures_require { 'line_numbers' }
 require_relative 'rcov_format_coverage'
+require_relative 'external_client'
 
 module MetricFu
 
@@ -43,12 +44,12 @@ module MetricFu
     def analyze
       rcov_text = load_output
       formatter = MetricFu::RCovFormatCoverage.new(rcov_text)
-      @test_coverage = formatter.to_h
+      @rcov = formatter.to_h
     end
 
     def to_h
       {
-        :test_coverage => @test_coverage
+        :rcov => @rcov
       }
     end
 
@@ -60,7 +61,7 @@ module MetricFu
     end
 
     def load_output
-      File.read(output_file)
+      MetricFu::RCovTestCoverageClient.new(output_file).load
     end
 
     def output_file
