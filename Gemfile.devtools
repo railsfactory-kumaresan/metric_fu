@@ -30,7 +30,6 @@ end
 
 group :metrics do
   # gem 'rubocop',   '~> 0.14.1'
-  gem 'simplecov', '~> 0.7.1'
 end
 
 platform :jruby do

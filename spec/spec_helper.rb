@@ -7,11 +7,9 @@ if ENV['COVERAGE']
     puts '[COVERAGE] Running with SimpleCov HTML Formatter'
     require 'metric_fu/metrics/rcov/simplecov_formatter'
     formatters << SimpleCov::Formatter::MetricFu
-    # require 'simplecov-rcov-text'
-    # formatters << SimpleCov::Formatter::RcovTextFormatter
-    puts '[COVERAGE] Running with SimpleCov Rcov Formatter'
+    puts '[COVERAGE] Running with SimpleCov MetricFu Formatter'
   rescue LoadError
-    puts '[COVERAGE] SimpleCov Rcov formatter could not be loaded'
+    puts '[COVERAGE] SimpleCov MetricFu formatter could not be loaded'
   end
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[ *formatters ]
   SimpleCov.start

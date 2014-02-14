@@ -198,8 +198,6 @@ Add to your Gemfile or otherwise install
 
 ```ruby
 gem 'simplecov'
-# https://github.com/kina/simplecov-rcov-text
-gem 'simplecov-rcov-text'
 ```
 
 Modify your [spec_helper](https://github.com/metricfu/metric_fu/blob/master/spec/spec_helper.rb) as per the SimpleCov docs and run your tests before running metric_fu
@@ -207,12 +205,11 @@ Modify your [spec_helper](https://github.com/metricfu/metric_fu/blob/master/spec
 ```ruby
 #in your spec_helper
 require 'simplecov'
-require 'simplecov-rcov-text'
-SimpleCov.formatter = SimpleCov::Formatter::RcovTextFormatter
+SimpleCov.formatter = SimpleCov::Formatter::MetricFu
 # or
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::RcovTextFormatter
+  SimpleCov::Formatter::MetricFu
   ]
 SimpleCov.start
 ```
@@ -226,7 +223,7 @@ and must exist.
 
 * For 1.8.7 support, see version 3.0.0 for partial support, or 2.1.3.7.18.1 (where [Semantic Versioning](http://semver.org/) goes to die)
 
-* MetricFu  no longer runs any of the analyzed code. For code coverage, You may still use rcov metrics as documented above
+* MetricFu no longer runs any of the analyzed code. For code coverage, you may use a formatter as documented above
 
 * The Cane, Flog, and Rails Best Practices metrics are disabled when Ripper is not available
 
@@ -256,7 +253,7 @@ This is the official repository for metric_fu.  The original repository by Jake 
 * Rails-only
   * [Rails Best Practices](https://rubygems.org/gems/rails_best_practices), [Source](https://github.com/railsbp/rails_best_practices)
 * Test Coverage
-  * 1.9: [SimpleCov](http://rubygems.org/gems/simplecov) and [SimpleCov-Rcov-Text](http://rubygems.org/gems/simplecov-rcov-text)
+  * 1.9: [SimpleCov](http://rubygems.org/gems/simplecov) and SimpleCov::Formatter::MetricFu
   * 1.8: [Rcov](http://rubygems.org/gems/rcov)
 * Hotspots (a meta-metric of the above)
 
